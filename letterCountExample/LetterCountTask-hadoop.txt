@@ -1,0 +1,26 @@
+# Run in ~/Apache/hadoop-2.8.1/
+
+set wcDir        = /Users/godfrey/Class/Monarch/Code/WordHadoop
+set streamingJar = share/hadoop/tools/lib/hadoop-streaming-2.8.1.jar
+set hdfsDir      = /user/godfrey
+
+printf "WORD MAP-REDUCE\n\n"
+bin/hadoop jar $streamingJar                        \
+    -files   $wcDir/wordMap.py,$wcDir/wordReduce.py \
+    -mapper  $wcDir/wordMap.py                      \
+    -reducer $wcDir/wordReduce.py                   \
+    -input   $hdfsDir/Gutenberg/'*'                 \
+    -output  $hdfsDir/Word
+
+printf "\nLETTER MAP-REDUCE\n\n"
+bin/hadoop jar $streamingJar                            \
+    -files   $wcDir/letterMap.py,$wcDir/letterReduce.py \
+    -mapper  $wcDir/letterMap.py                        \
+    -reducer $wcDir/letterReduce.py                     \
+    -input   $hdfsDir/Word/'*'                          \
+    -output  $hdfsDir/Letter
+
+unset hdfsDir
+unset streamingJar
+unset wcDir
+

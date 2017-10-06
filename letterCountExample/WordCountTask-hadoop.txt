@@ -1,0 +1,17 @@
+# Run in ~/Apache/hadoop-2.8.1/
+
+set wcDir        = /Users/godfrey/Class/Monarch/Code/WordHadoop
+set streamingJar = share/hadoop/tools/lib/hadoop-streaming-2.8.1.jar
+set hdfsDir      = /user/godfrey
+
+bin/hadoop jar $streamingJar                        \
+    -files   $wcDir/wordMap.py,$wcDir/wordReduce.py \
+    -mapper  $wcDir/wordMap.py                      \
+    -reducer $wcDir/wordReduce.py                   \
+    -input   $hdfsDir/Gutenberg/'*'                 \
+    -output  $hdfsDir/Gutenberg-out
+
+unset hdfsDir
+unset streamingJar
+unset wcDir
+
