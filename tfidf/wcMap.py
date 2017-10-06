@@ -11,7 +11,7 @@ for line in sys.stdin:
 	# remove leading and trailing white space
 	line = line.strip()
 	# split the line into words
-	words = filter(None, re.split('\W+', line))
+	words = filter(None, re.split('[\W+_]', line))
 	# write out word paired with count of 1
 	for word in words:
 		# write the results to STDOUT
