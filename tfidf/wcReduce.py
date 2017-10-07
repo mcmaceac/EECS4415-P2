@@ -14,8 +14,8 @@ for line in sys.stdin:
     line = line.strip()
 
     # parse the input
-    wordDoc, count = line.split('\t', 1)
-    word, document = wordDoc.split(' ', 1)
+    word, count = line.split('\t', 1)           #word in this case is the word and it the doc it came from
+    #word, document = wordDoc.split(' ', 1)
 
     # convert count (currently a string) to int
     try:
@@ -31,10 +31,10 @@ for line in sys.stdin:
     else:
         if currWord:
             # write result to STDOUT
-            print('%s %s\t%s' % (currWord, document, currCount))
+            print('%s\t%s' % (currWord, currCount))
         currCount = count
         currWord  = word
 
 # do not forget to output the last word if needed!
 if currWord == word:
-    print('%s %s\t%s' % (currWord, document, currCount))
+    print('%s\t%s' % (currWord, currCount))
