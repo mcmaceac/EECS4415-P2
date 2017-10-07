@@ -5,6 +5,9 @@
 import sys
 import re
 
+occur = 1
+currWord = None
+
 # input comes from STDIN
 for line in sys.stdin:
 	# remove leading and trailing white space
@@ -13,5 +16,9 @@ for line in sys.stdin:
 	wordDoc, count = line.split('\t', 1)
 	word, docName = wordDoc.split(' ', 1)
 
-	#word is now the key so the words will be grouped together (by key)
-	print('%s\t%s %s' % (word, docName, count))
+	if currWord == word:
+		occur = occur + 1
+	else:						#we have reached the end of this word meaning occur is the #docs this word appears in
+		occur = 1
+		currWord = word
+	print('%s#%s#%s#%s' % (word, occur, docName, count))

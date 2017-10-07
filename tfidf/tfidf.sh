@@ -13,6 +13,12 @@ bin/hadoop jar $STREAMINGJAR                        \
 
 printf "\nTFIDF MAP-REDUCE\n\n"
 bin/hadoop jar $STREAMINGJAR                            \
+	-D mapreduce.job.output.key.comparator.class=org.apache.hadoop.mapreduce.lib.partition.KeyFieldBasedComparator \
+	-D stream.map.output.field.separator=# 			\
+    -D stream.num.map.output.key.fields=4               \
+    -D mapreduce.map.output.key.field.separator=#      \
+    -D mapreduce.partition.keycomparator.options="-k1,1 -k2,2nr" \
+    -D mapreduce.job.reduces=1					\
     -files   $WCDIR/wdMap.py,$WCDIR/wdReduce.py \
     -mapper  $WCDIR/wdMap.py                        \
     -reducer $WCDIR/wdReduce.py                     \

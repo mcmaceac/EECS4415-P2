@@ -15,7 +15,7 @@ for line in sys.stdin:
 
     # parse the input
     word, count = line.split('\t', 1)           #word in this case is the word and it the doc it came from
-    #word, document = wordDoc.split(' ', 1)
+    onlyWord, docName = line.split(' ', 1)
 
     # convert count (currently a string) to int
     try:

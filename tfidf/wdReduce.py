@@ -7,39 +7,27 @@ import re
 from math import log
 
 currWord = None
-wordFreq = 1				#this variable will track number of documents the currWord appears in
-cache = []
+maxFreq = 0
+
 
 
 # input comes from STDIN
 for line in sys.stdin:
 	# remove leading and trailing white space
 	line = line.strip()
-	# split the line into words
-	word, docCount = line.split('\t', 1)
-	#print('word:%s docCount: %s' % (word, docCount))
-	docName, count = line.split(' ', 1)
-
-	if currWord == word:
-		wordFreq = wordFreq + 1
-		cache.append(line)
-	else:								#a new word has been detected, clear the cache and append the tfidf
-		if currWord != None:
-			for item in cache:					#word\tdocumentName count
-				w, dC = item.split('\t', 1)
-				dN, c = dC.split(' ', 1)
-				tfidf = float(c) * log(20/wordFreq)
-				print('%s,%s\t%s' % (w, dN, tfidf))
+	word, ffc = line.split('#', 1)
+	freq, fc = ffc.split('#', 1)
+	file, count = fc.split('#', 1)
+	
+	if word == currWord:						#word has not changed, so we keep the maxFreq, which is the
+		tfidf = float(count) * log(20/float(maxFreq)) #num of docs the word appears in
+		print('%s,%s\t%s' %(word, file, tfidf))
+	else:										#word is different, so we take the first freq which is the 
+		currWord = word 						#number of documents the word appears in (maxFreq)
+		maxFreq = freq
+		tfidf = float(count) * log(20/float(maxFreq))
+		print('%s,%s\t%s' %(word, file, tfidf))
 
 
-		currWord = word 				#change currentWord to the newly deteced word
-		cache = []						#clear the cache for the new word
-		cache.append(line)
-		wordFreq = 1
 
-for item in cache:					#clear the cache one final time
-	w, dC = item.split('\t', 1)
-	dN, c = dC.split(' ', 1)
-	tfidf = float(c) * log(20/wordFreq)
-	print('%s,%s\t%s' % (w, dN, tfidf))
 	
