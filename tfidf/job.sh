@@ -23,4 +23,4 @@ bin/hadoop jar $STREAMINGJAR                            \
     -mapper  $WCDIR/wdMap.py                        \
     -reducer $WCDIR/wdReduce.py                     \
     -input   Word/'*'                                   \
-    -output  Output
+    -output  Out
